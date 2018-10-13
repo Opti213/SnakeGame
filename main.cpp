@@ -1,94 +1,61 @@
-#include <iostream>
-#include <conio.h>
-#include <time.h>
-
-const int HEIGHT {10}, WIDTH {10};
-char map[HEIGHT][WIDTH];
+#include "Snake.h"
+#include "cstring"
 
 using namespace std;
 
-class Snake{
-private:
-    int x{WIDTH/2}, y{HEIGHT/2},  snakeSize{3}, score{0}, food_x, food_y;
-    bool GameOver = false;
-public:
-
-    void initMap(){
-        for (int i {0}; i <= HEIGHT; ++i){
-            for(int j {0}; j <= WIDTH; ++j){
-                if ((i == 0 || i == HEIGHT) || (j == 0 || j == WIDTH)){
-                    map[j][i] = '+';
-                } else if (i == y && j == x){
-                    map[j][i] = '#';
-                } else if (i == food_y && j == food_x){
-                    map[j][i] = '@';
-                } else {
-                    map[j][i] = ' ';
-                }
-            }
-        }
-    }
-
-    void drawMap(){
-            for (int i {0}; i <= HEIGHT; ++i) {
-                for (int j{0}; j <= WIDTH; ++j) {
-                    cout << map[j][i];
-                }
-                cout << endl;
-            }
-    };
-
-    void spawnFood(){
-        srand(time(NULL));
-        food_x = 1 + rand() % (WIDTH - 1);
-        food_y = 1 + rand() % (HEIGHT - 1);
-    }
-
-    void move(int moving_x, int moving_y){
-        int xNew = x + moving_x;
-        int yNew = y + moving_y;
-
-        if(map[xNew][yNew] == '@'){
-            snakeSize++;
-            spawnFood();
-        }
-
-        else if(map[xNew][yNew] = '+'){
-            GameOver = true;
-        }
-
-        x = xNew;
-        y = yNew;
-        map[x][y] = snakeSize++;
-
-    }
-    void moveSnake(){
-        switch (tolower(getch())){
-            case 'w':
-                move(-1,0);
-                break;
-            case 'a':
-                move(0,-1);
-                break;
-            case 's':
-                move(1,0);
-                break;
-            case 'd':
-                move(0,1);
-                break;
-        }
-        for(int i {0}; i < WIDTH; i++){
-            for(int j {0}; j < HEIGHT; j++){
-                if(map[i][j]  == '#') map[i][j]--;
-            }
-        }
-    }
-};
-
-int main(){
+int main() {
+    system ("mode con cols=75 lines=25");
+    system("color 02");
     Snake player;
+    struct timespec tw = {0,230000000};
     player.spawnFood();
-    player.initMap();
-    player.drawMap();
+    cout << "here\n";
+    player.startMenu();
+    player.initField();
+
+
+    while(!player.gameOver){
+        if(_kbhit()){
+            player.checkDirection(getch());
+        }
+
+        player.update();
+        system("cls");
+        player.drawField();
+        nanosleep(&tw,NULL);
+        player.score += player.size_of_snake;
+    }
+
+    for (int i = 0; i < 9; ++i){
+        i % 2 == 0 ? system("color 02") : system("color 04");
+        nanosleep(&tw,NULL);
+    }
+    system ("cls");
+    system ("mode con cols=75 lines=25");
+    system ("color 0C");
+    cout << "\n"
+            "\n"
+            "                    /^\\/^\\\n"
+            "                  _|__|  O|\n"
+            "         \\/     /~     \\_/ \\\n"
+            "          \\____|__________/  \\\n"
+            "                 \\_______      \\\n"
+            "                         `\\     \\                 \\\n"
+            "                           |     |                  \\\n"
+            "                          /      /                    \\\n"
+            "                         /     /                       \\\\\n"
+            "                       /      /                         \\ \\\n"
+            "                      /     /                            \\  \\\n"
+            "                    /     /             _----_            \\   \\\n"
+            "                   /     /           _-~      ~-_         |   |\n"
+            "                  (      (        _-~    _--_    ~-_     _/   |\n"
+            "                   \\      ~-____-~    _-~    ~-_    ~-_-~    /\n"
+            "                     ~-_           _-~          ~-_       _-~\n"
+            "                        ~--______-~                ~-___-~"
+            "              \n GAME OVER \n Your Score is: ";
+    cout << (player.size_of_snake-3)*100 << endl;
+
+    system("pause");
+
     return 0;
-};
+}
