@@ -1,2 +1,2 @@
 # SnakeGame
-my little step
+my realization of snake for windows(console)

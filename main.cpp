@@ -7,7 +7,7 @@ int main() {
     system ("mode con cols=75 lines=25");
     system("color 02");
     Snake player;
-    struct timespec tw = {0,230000000};
+    struct timespec tw = {1,0};
     player.spawnFood();
     cout << "here\n";
     player.startMenu();
@@ -31,28 +31,20 @@ int main() {
         nanosleep(&tw,NULL);
     }
     system ("cls");
-    system ("mode con cols=75 lines=25");
-    system ("color 0C");
-    cout << "\n"
-            "\n"
-            "                    /^\\/^\\\n"
-            "                  _|__|  O|\n"
-            "         \\/     /~     \\_/ \\\n"
-            "          \\____|__________/  \\\n"
-            "                 \\_______      \\\n"
-            "                         `\\     \\                 \\\n"
-            "                           |     |                  \\\n"
-            "                          /      /                    \\\n"
-            "                         /     /                       \\\\\n"
-            "                       /      /                         \\ \\\n"
-            "                      /     /                            \\  \\\n"
-            "                    /     /             _----_            \\   \\\n"
-            "                   /     /           _-~      ~-_         |   |\n"
-            "                  (      (        _-~    _--_    ~-_     _/   |\n"
-            "                   \\      ~-____-~    _-~    ~-_    ~-_-~    /\n"
-            "                     ~-_           _-~          ~-_       _-~\n"
-            "                        ~--______-~                ~-___-~"
-            "              \n GAME OVER \n Your Score is: ";
+    system ("mode con cols=50 lines=20");
+    system ("color 0D");
+    cout << "                              \n"
+            "              ,-.       _,---._ __  / \\\n"
+            "             /  )    .-'       `./ /   \\\n"
+            "            (  (   ,'            `/    /|\n"
+            "             \\  `-\"             \\'\\   / |\n"
+            "              `.              ,  \\ \\ /  |\n"
+            "               /`.          ,'-`----Y   |\n"
+            "              (            ;        |   '\n"
+            "              |  ,-.    ,-'   CODE  |  /\n"
+            "              |  | (   |       <3   | /\n"
+            "              )  |  \\  `.___________|/\n"
+            "              `--'   `--'\n\n\n GAME OVER \n Your Score is: ";
     cout << (player.size_of_snake-3)*100 << endl;
 
     system("pause");
